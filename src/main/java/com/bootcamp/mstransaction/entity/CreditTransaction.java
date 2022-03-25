@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class CreditTransaction extends BaseEntity {
     private Float amount;
     private LocalDateTime paymentDate;
-    private Client client;
     private CreditClient creditClient;
 
 }

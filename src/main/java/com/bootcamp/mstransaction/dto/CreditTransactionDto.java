@@ -13,6 +13,5 @@ public class CreditTransactionDto {
     private String id;
     private Float amount;
     private LocalDateTime paymentDate;
-    private Client client;
     private CreditClient creditClient;
 }

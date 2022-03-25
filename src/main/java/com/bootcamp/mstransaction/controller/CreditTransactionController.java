@@ -1,7 +1,9 @@
 package com.bootcamp.mstransaction.controller;
 
 import com.bootcamp.mstransaction.dto.CreditTransactionDto;
+import com.bootcamp.mstransaction.dto.PaymentDto;
 import com.bootcamp.mstransaction.resource.CreditTransactionResource;
+import com.bootcamp.mstransaction.webclient.dto.CreditClientDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -31,5 +33,10 @@ public class CreditTransactionController {
     @DeleteMapping
     public Mono<Void> delete(@RequestBody CreditTransactionDto creditTransactionDto){
         return creditTransactionResource.delete(creditTransactionDto);
+    }
+
+    @PostMapping("/payment")
+    public Mono<CreditTransactionDto> createPayment(@RequestBody PaymentDto paymentDto){
+        return creditTransactionResource.payment(paymentDto);
     }
 }
