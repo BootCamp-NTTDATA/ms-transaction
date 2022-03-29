@@ -35,6 +35,6 @@ public class CreditTransactionServiceImpl implements ICreditTransactionService {
 
     @Override
     public Flux<CreditTransaction> findCreditTransactionCode(String code) {
-        return iCreditTransactionRepository.findByCode(code);
+        return iCreditTransactionRepository.findByCreditClientCode(code);
     }
 }

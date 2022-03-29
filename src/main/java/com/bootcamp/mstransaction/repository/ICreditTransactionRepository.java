@@ -8,5 +8,5 @@ import reactor.core.publisher.Flux;
 @Repository
 public interface ICreditTransactionRepository extends ReactiveMongoRepository<CreditTransaction, String> {
 
-    Flux<CreditTransaction> findByCode(String code);
+    Flux<CreditTransaction> findByCreditClientCode(String code);
 }

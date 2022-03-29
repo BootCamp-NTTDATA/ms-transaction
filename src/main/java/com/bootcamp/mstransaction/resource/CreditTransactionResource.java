@@ -27,20 +27,40 @@ public class CreditTransactionResource extends MapperUtil {
 
     public Mono<CreditTransactionDto> payment(PaymentDto paymentDto) {
         CreditTransaction creditTransaction= new CreditTransaction();
+        creditTransaction.setAmount(paymentDto.getAmount());
+        creditTransaction.setPaymentDate(LocalDateTime.now());
+        creditTransaction.setCreatedAt(LocalDateTime.now());
         return iRegisterProductClientService.findCreditByClient(paymentDto.getNumberDocument(),paymentDto.getTypeDocument(),paymentDto.getCode())
                 .switchIfEmpty(Mono.error(new Exception()))
                 .flatMap(creditClientDto -> {
-                    if(creditClientDto.getCreditAmount() > paymentDto.getAmount() ){
-                        creditTransaction.setAmount(paymentDto.getAmount());
-                        creditTransaction.setPaymentDate(LocalDateTime.now());
-                        creditTransaction.setCreatedAt(LocalDateTime.now());
-                        creditTransaction.setCreditClient(map(creditClientDto,CreditClient.class));
-                        return iCreditTransactionService.save(creditTransaction).map(x->map(x,CreditTransactionDto.class));
-                    }
-                    return Mono.error(new Exception());
+                     return sumPayment(paymentDto.getCode()).flatMap(montoMaximo ->{
+                         float x = creditClientDto.getCreditAmount() - montoMaximo;
+                         if ( x  == paymentDto.getAmount()){
+                             return null;
+                         }
+                         if( x < paymentDto.getAmount()){
+                             return Mono.error(new Exception());
+                         }else{
+                             creditTransaction.setCreditClient(map(creditClientDto,CreditClient.class));
+                             return iCreditTransactionService.save(creditTransaction).map(y ->map(y,CreditTransactionDto.class));
+                         }
+                     });
+
                 });
     }
-    
+
+
+    public Mono<Float> sumPayment(String code){
+        return iCreditTransactionService.findCreditTransactionCode(code)
+                .collectList()
+                .flatMap(creditTransactions ->{
+                    float[] a = {0};
+                    creditTransactions.forEach(x->{
+                       a[0] = a[0] + x.getAmount();
+                    });
+                    return Mono.just(a[0]);
+                });
+    }
     public Mono<CreditTransactionDto> create(CreditTransactionDto creditTransactionDto) {
         CreditTransaction creditTransaction = map(creditTransactionDto, CreditTransaction.class);
         return iCreditTransactionService.save(creditTransaction)

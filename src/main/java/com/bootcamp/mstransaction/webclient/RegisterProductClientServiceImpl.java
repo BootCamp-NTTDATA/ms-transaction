@@ -32,6 +32,5 @@ public class RegisterProductClientServiceImpl implements IRegisterProductClientS
                     }
                     return Mono.error(error);
                 });
-
     }
 }
