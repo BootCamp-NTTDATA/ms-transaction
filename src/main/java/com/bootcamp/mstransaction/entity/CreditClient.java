@@ -1,8 +1,7 @@
 package com.bootcamp.mstransaction.entity;
 
-import com.bootcamp.mstransaction.webclient.dto.BankAccount;
 import com.bootcamp.mstransaction.webclient.dto.Client;
-import com.bootcamp.mstransaction.webclient.dto.CreditType;
+import com.bootcamp.mstransaction.webclient.dto.TypeCredit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,7 @@ public class CreditClient {
     private Float creditAmount;
     private Float interestRate;
     private Client client;
-    private CreditType creditType;
-    private BankAccount bankAccount;
+    private TypeCredit creditType;
+
     private boolean state;
 }

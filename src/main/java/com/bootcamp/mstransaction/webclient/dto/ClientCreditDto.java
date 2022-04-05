@@ -4,18 +4,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CreditClientDto {
+public class ClientCreditDto {
     private String id;
     private String code;
-    private Float creditAmount;
-    private Float interestRate;
+    private BigDecimal amountGiven;
+    private BigDecimal amountPaid;
+    private int fees;
+    private int feesPaid;
     private Client client;
-    private CreditType creditType;
-    private BankAccount bankAccount;
+    private TypeCredit typeCredit;
     private boolean state;
 }

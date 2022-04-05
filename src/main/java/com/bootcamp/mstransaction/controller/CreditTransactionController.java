@@ -3,7 +3,6 @@ package com.bootcamp.mstransaction.controller;
 import com.bootcamp.mstransaction.dto.CreditTransactionDto;
 import com.bootcamp.mstransaction.dto.PaymentDto;
 import com.bootcamp.mstransaction.resource.CreditTransactionResource;
-import com.bootcamp.mstransaction.webclient.dto.CreditClientDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;

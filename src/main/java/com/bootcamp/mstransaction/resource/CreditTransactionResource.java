@@ -33,8 +33,8 @@ public class CreditTransactionResource extends MapperUtil {
         return iRegisterProductClientService.findCreditByClient(paymentDto.getNumberDocument(),paymentDto.getTypeDocument(),paymentDto.getCode())
                 .switchIfEmpty(Mono.error(new Exception()))
                 .flatMap(creditClientDto -> {
-                     return sumPayment(paymentDto.getCode()).flatMap(montoMaximo ->{
-                         float x = creditClientDto.getCreditAmount() - montoMaximo;
+                     return sumPayment(paymentDto.getCode()).flatMap(accumulatedAmount ->{
+                         float x = creditClientDto.getAmountGiven().floatValue() - accumulatedAmount;
                          if ( x  == paymentDto.getAmount()){
                              return null;
                          }
